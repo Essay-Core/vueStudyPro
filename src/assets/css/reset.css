@@ -1,0 +1,8 @@
+/**
+设置默认样式，在程序入口导入
+ */
+html, body{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
