@@ -2,7 +2,6 @@
   <div class="login-warp">
     <el-form
       class="login-form"
-      :label-position="top"
       label-width="80px"
       :model="formdata">
       <h2>用户登录</h2>
@@ -26,35 +25,31 @@
         data(){
           return{
             formdata: {
-              username:"",
-              password:""
+              username:"admin",
+              password:"123456"
             }
           }
         },
       methods:{
-          async handleLogin(){
-            //使异步操作代码看起来像同步代码
-            //找到异步操作
-            //在异步操作前添加await
-            //并且在当前函数添加async
+        handleLogin: async function () {
+          const ret = await this.$http.post('login', this.formdata)
+          const {
+            data,
+            meta: {msg, status}
+          } = ret.data
 
-            // const res = await this.$http.post('login', this.formdata)
-            // const {
-            //   data,
-            //   meta:{msg,status}
-            // } = res.data
-            //如果用户没登录，url直接登录到home组件
-            //保存正确的用户token
-            // localStorage.getItem("token",date.token)
-            //消息通知框
-            this.$message({
-              message: '恭喜你，这是一条成功消息',
-              type: 'success'
-            });
+          //如果用户没登录，url直接登录到home组件
+          //保存正确的用户token到localStorage中
+          localStorage.setItem("token", data.token)
+          //消息通知框
+          this.$message({
+            message: '恭喜你，这是一条成功消息',
+            type: 'success'
+          });
 
-            //跳转到home 组件页面
-            this.$router.push({name:'home'})
-          }
+          //跳转到home 组件页面
+          this.$router.push({name: 'home'})
+        }
       }
     }
 </script>

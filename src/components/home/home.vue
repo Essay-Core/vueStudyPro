@@ -83,22 +83,6 @@
             </el-menu-item>
 
           </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
-            </template>
-
-            <el-menu-item index="1-1">
-              <i class="el-icon-location"></i>
-              <span>选项1</span>
-            </el-menu-item>
-            <el-menu-item index="1-2">
-              <i class="el-icon-location"></i>
-              <span>选项2</span>
-            </el-menu-item>
-
-          </el-submenu>
         </el-menu>
       </el-aside>
 
@@ -113,14 +97,14 @@
 <script>
     export default {
         name: "home",
-      methods:{
-        loginout(){
-          localStorage.clear()
-          this.$message.success("退出成功")
-          this.$router.push({name:'login'})
+        methods:{
+          loginout(){
+            localStorage.clear()
+            this.$message.success("退出成功")
+            this.$router.push({name:'login'})
 
+          }
         }
-      }
     }
 </script>
 
@@ -131,13 +115,13 @@
   }
 
   .header{
-    background-color: aquamarine;
+    background-color: white;
   }
   .aside{
-    background-color: chocolate;
+    background-color: white;
   }
   .main{
-    background-color: darkcyan;
+    background-color: white;
   }
   .middlehead{
     text-align: center;
@@ -148,11 +132,4 @@
     text-decoration: none;
   }
 
-  .headpic{
-
-  }
-
-  .menu{
-    width: 100%;
-  }
 </style>
