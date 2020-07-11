@@ -3,11 +3,7 @@
     <!-- 页面显示的内容在这里面编写 -->
 
     <!--1， 面包屑 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <selfBread level_1='用户管理' level_2='用户列表'></selfBread>
 
     <!-- 2，搜索 -->
     <el-row>

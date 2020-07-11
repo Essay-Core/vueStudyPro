@@ -12,10 +12,12 @@ import './assets/css/reset.css'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import MyServerHttp from './plugins/http'
+import SelfBread from './components/subcom/selfBread'
 
 //适用vue插件
 Vue.use(ElementUI)
 Vue.use(MyServerHttp)
+Vue.component(SelfBread.name,SelfBread)
 
 /*控制台log是否输出 */
 Vue.config.productionTip = false
