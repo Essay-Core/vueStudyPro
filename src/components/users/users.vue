@@ -50,7 +50,7 @@
          -->
       <el-table-column label="创建时间">
         <template slot-scope="scope">
-          {{ scope.row.create_time | fmtdate}}
+          {{ scope.row.create_time}}
         </template>
       </el-table-column>
 
