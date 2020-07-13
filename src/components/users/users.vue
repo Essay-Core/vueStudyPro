@@ -358,6 +358,6 @@
 
 <style scoped>
   .inputSearch {
-    width: 300px;
+    width: 150px;
   }
 </style>

@@ -5,14 +5,13 @@
       <el-row>
         <el-col :span="4">
           <div class="grid-content bg-purple"></div>
-<!--          <img src="D:\code_2018_1031\node_modules\my-project\src\assets\1.png" alt="无法显示图片" class="headpic">-->
         </el-col>
         <el-col :span="18">
           <h3 class="middlehead">电商后台管理平台</h3>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">
-            <a href="#" class="loginout" @click="loginout">退出</a>
+            <a href="#" class="loginout" @click="loginout()">退出</a>
           </div>
         </el-col>
       </el-row>

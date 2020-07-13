@@ -6,20 +6,21 @@
     <el-table :data="tableData" style="width: 100%">
       <el-table-column type="expand">
         <template slot-scope="props">
+          <!-- 一级大循环 -->
           <el-row v-for="(item1,i) in props.row.children" :key="i">
-            <!-- 第一级权限 -->
             <el-col :span="4">
               <el-tag closable type="success">{{item1.authName}}</el-tag>
               <i class="el-icon-arrow-right"></i>
             </el-col>
-
             <el-col :span="20">
+              <!-- 二级循环 -->
               <el-row v-for="(item2,i) in item1.children" :key="i">
                 <el-col :span="4">
                   <el-tag closable type="info">{{item2.authName}}</el-tag>
                   <i class="el-icon-arrow-right"></i>
                 </el-col>
                 <el-col :span="16">
+                  <!-- 三级循环 -->
                   <el-tag
                     v-for="(item3,i) in item2.children"
                     :key="i"
@@ -78,23 +79,24 @@
         <el-button type="primary" @click="dialogEditRoleConfirm()">确 定</el-button>
       </div>
     </el-dialog>
-    <!-- 删除角色 -->
+    <!-- 删除角色，弹出确认对话框 -->
 
-    <!-- 分配用户角色 -->
-    <el-dialog title="分配用户角色" :visible.sync="dialogFormVisibleSelectRole">
+    <!-- 分配角色权限 -->
+    <el-dialog title="分配角色权限" :visible.sync="dialogFormVisibleSelectRole">
       <el-form :model="currentRoleMsg">
-        <el-form-item label="角色名称" label-width="100px">
-          <el-input v-model="currentRoleMsg.roleName" autocomplete="off"></el-input>
-        </el-form-item>
-        <!-- 下拉选择器 -->
-        <el-select v-model="value" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
+        <!-- 权限树节点展示 -->
+        <template slot-scope="scope">
+          <el-tree
+            :data="treeData"
+            default-expanded-keys="[2, 3]"
+            default-checked-keys="[5]"
+            :props="props"
+            :load="loadNode"
+            lazy
+            show-checkbox
+            @check-change="handleCheckChange"
+          ></el-tree>
+        </template>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleSelectRole = false">取 消</el-button>
@@ -118,7 +120,50 @@ export default {
       dialogFormVisibleSelectRole: false,
       /* 用户角色选择器选项 */
       options: [],
-      value: ""
+      value: "",
+      //   树节点变量
+      defaultexpandKeysArry:[],
+      defaultCheckedKeysArry:[],
+      treeData: [{
+          id: 1,
+          label: '一级 1',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          label: '一级 2',
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          label: '一级 3',
+          children: [{
+            id: 7,
+            label: '二级 3-1'
+          }, {
+            id: 8,
+            label: '二级 3-2'
+          }]
+        }],
+      props: {
+          children: 'children',
+          label: 'label'
+      },
+      count: 1
     };
   },
   //当加载当前页面是执行
@@ -155,10 +200,14 @@ export default {
       dialogFormVisibleDeleteRole = true;
       this.currentRoleMsg = role;
     },
-    // 分配用户角色按钮
+    // 分配角色权限按钮
     async clickRoleManage(role) {
       this.dialogFormVisibleSelectRole = true;
       this.currentRoleMsg = role;
+      // defaultexpandKeysArry
+      // 遍历取得当前角色的权限
+      currentRoleMsg.array.forEach(element1 => {
+      });
     },
     // 对话框确定按钮--编辑角色
     async dialogEditRoleConfirm() {
@@ -205,6 +254,46 @@ export default {
 
       this.dialogFormVisibleSelectRole = false;
       this.getRoleList();
+    },
+    // 树节点响应函数
+    handleCheckChange(data, checked, indeterminate) {
+      console.log(data, checked, indeterminate);
+    },
+    handleNodeClick(data) {
+      console.log(data);
+    },
+    loadNode(node, resolve) {
+      if (node.level === 0) {
+        return resolve([{ name: "region1" }, { name: "region2" }]);
+      }
+      if (node.level > 3) return resolve([]);
+
+      var hasChild;
+      if (node.data.name === "region1") {
+        hasChild = true;
+      } else if (node.data.name === "region2") {
+        hasChild = false;
+      } else {
+        hasChild = Math.random() > 0.5;
+      }
+
+      setTimeout(() => {
+        var data;
+        if (hasChild) {
+          data = [
+            {
+              name: "zone" + this.count++
+            },
+            {
+              name: "zone" + this.count++
+            }
+          ];
+        } else {
+          data = [];
+        }
+
+        resolve(data);
+      }, 1);
     }
   }
 };
