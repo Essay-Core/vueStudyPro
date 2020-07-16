@@ -14,7 +14,7 @@
               <span v-if="scope.row.level==='2'">三级权限</span>
               <span v-if="scope.row.level==='3'">四级权限</span>
           </template>
-          
+
       </el-table-column>
       <el-table-column  label="操作">
           <template slot-scope="scope">
@@ -59,9 +59,9 @@ export default {
   methods: {
     //   获取权限列表
     async getRightList() {
-       /* 获取token值 */
-      const AUTH_TOKEN = localStorage.getItem("token");
-      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      //  /* 获取token值 */
+      // const AUTH_TOKEN = localStorage.getItem("token");
+      // this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
       const res = await this.$http.get("rights/list");
       const {

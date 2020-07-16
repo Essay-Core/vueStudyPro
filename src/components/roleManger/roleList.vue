@@ -88,13 +88,14 @@
         <template slot-scope="scope">
           <el-tree
             :data="treeData"
-            default-expanded-keys="[2, 3]"
-            default-checked-keys="[5]"
+            :default-expanded-keys="defaultexpandKeysArry"
+            :default-checked-keys="defaultCheckedKeysArry"
             :props="props"
+            node-key="id"
             :load="loadNode"
             lazy
             show-checkbox
-            @check-change="handleCheckChange"
+            @check-change="handleCheckChange()"
           ></el-tree>
         </template>
       </el-form>
@@ -124,44 +125,10 @@ export default {
       //   树节点变量
       defaultexpandKeysArry:[],
       defaultCheckedKeysArry:[],
-      treeData: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
+      treeData: [],
       props: {
+          label: 'authName',
           children: 'children',
-          label: 'label'
       },
       count: 1
     };
@@ -174,8 +141,8 @@ export default {
     /* 获取角色列表 */
     async getRoleList() {
       /* 获取token值 */
-      const AUTH_TOKEN = localStorage.getItem("token");
-      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      // const AUTH_TOKEN = localStorage.getItem("token");
+      // this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
       const res = await this.$http.get("roles");
       const {
@@ -197,17 +164,23 @@ export default {
     },
     // 点击删除按钮
     async clickDeleteOpera(role) {
-      dialogFormVisibleDeleteRole = true;
+      this.dialogFormVisibleDeleteRole = true;
       this.currentRoleMsg = role;
     },
     // 分配角色权限按钮
     async clickRoleManage(role) {
       this.dialogFormVisibleSelectRole = true;
       this.currentRoleMsg = role;
-      // defaultexpandKeysArry
-      // 遍历取得当前角色的权限
-      currentRoleMsg.array.forEach(element1 => {
-      });
+
+    //  获取树形结构的权限表
+    //  * 请求路径：rights/:type
+    // * 请求方法：get
+      const res = await this.$http.get(`rights/tree`)
+      const {data, meta:{msg,status}} = res.data
+      if (status === 200){
+        this.$message.success(msg)
+        this.treeData = data
+      }
     },
     // 对话框确定按钮--编辑角色
     async dialogEditRoleConfirm() {

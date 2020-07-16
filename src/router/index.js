@@ -7,6 +7,9 @@ import Home from  '../components/home/home.vue'
 import Users from '../components/users/users.vue'
 import RoleList from '../components/roleManger/roleList.vue'
 import RightList from '../components/roleManger/rightList.vue'
+import GoodsList from '../components/goodsManger/goodsList.vue'
+import GoodAdd from '../components/goodsManger/goodAdd.vue'
+import Test from '../components/compTest/test'
 
 // 解决vue3中导航栏点击报错问题：Avoided redundant navigation to current location
 const originalPush = Router.prototype.push
@@ -39,7 +42,20 @@ export default new Router({
       name:'rightList',
       path:'/rightList',
       component:RightList
-    }]
+    },{
+      name: 'goodsList',
+      path: '/goodsList',
+      component: GoodsList
+    },{
+      name: 'goodAdd',
+      path: '/goodAdd',
+      component: GoodAdd
+    },{
+      name: 'test',
+      path:'/test',
+      component:Test
+    }
+    ]
 
   }
   ]

@@ -320,8 +320,8 @@
       //获取用户列表
       async getUserList() {
         //获取用户列表的请求
-        const AUTH_TOKEN = localStorage.getItem('token')
-        this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+        // const AUTH_TOKEN = localStorage.getItem('token')
+        // this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
 
         //发送请求
         const res = await this.$http.get(
