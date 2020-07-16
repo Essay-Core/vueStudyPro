@@ -253,8 +253,6 @@
           this.dialogFormVisibleRole = true
         }
         this.currUsername = user.username
-
-
       },
       //删除用户，弹出对话框 users/:id
       deleteUser(user) {
